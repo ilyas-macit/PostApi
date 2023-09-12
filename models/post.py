@@ -14,8 +14,8 @@ class Post(BaseModel):
 
 
 class PostUpdateDto(BaseModel):
-    title: str
-    short_description: str
-    description: str
-    tags: List[str]
+    title: str = None
+    short_description: str = None
+    description: str = None
+    tags: List[str] = None
 
