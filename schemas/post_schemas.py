@@ -27,6 +27,7 @@ def post_update_entity(item: PostUpdateDto) -> dict:
 
 def post_get_entity(item) -> dict:
     return {
+        'id': str(item["_id"]),
         'title': item['title'],
         'short_description': item['short_description'],
         'description': item['description'],
