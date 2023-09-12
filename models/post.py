@@ -1,6 +1,8 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from datetime import datetime
+
+
 class Post(BaseModel):
     id: str
     title: str
@@ -9,3 +11,11 @@ class Post(BaseModel):
     tags: List[str]
     created_at: datetime
     updated_at: datetime
+
+
+class PostUpdateDto(BaseModel):
+    title: str
+    short_description: str
+    description: str
+    tags: List[str]
+
