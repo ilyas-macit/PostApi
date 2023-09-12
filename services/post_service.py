@@ -21,7 +21,7 @@ def get_all():
 
 
 def get_by_id(id):
-    post = db.get({"_id": id})
+    post = db.get({"_id": ObjectId(id)})
     if post is not None:
         return post_get_entity(post)
     else:
