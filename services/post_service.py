@@ -14,39 +14,46 @@ db = Database(uri, db_name, collection)
 
 def get_all():
     posts = db.get_all()
-    if posts is not None:
-        return post_get_all_entities(posts)
-    else:
-        return Exception("Data could not be retrieved.")
+    if posts is None:
+        raise Exception("Data could not be retrieved.")
+
+    return post_get_all_entities(posts)
 
 
 def get_by_id(id):
     post = db.get({"_id": ObjectId(id)})
-    if post is not None:
-        return post_get_entity(post)
-    else:
-        return Exception("Post could not found")
+    if post is None:
+        raise Exception("Post could not found")
+    return post_get_entity(post)
 
 
-def create_post( post):
-    if post is not None:
-        postData = post_create_entity(post)
-        db.add(postData)
-    else:
-        return Exception("post cannot be None")
-
+def create_post(post):
+    #validation rules
+    if post is None:
+        raise ValueError("Post value cannot be None. You must specify a valid post.")
+    if not isinstance(post, Post):
+        raise TypeError("Input must be an instance of Post.")
+    if not len(post.tags) > 0:
+        raise Exception("Tags must be greater than 0")
+    if not len(post.title) > 3:
+        raise Exception("Title must be greater than 3 character")
+    postData = post_create_entity(post)
+    db.add(postData)
 
 def update_post(id, post):
-    if post is not None:
-        postData = post_update_entity(post)
-        db.update(id, postData)
-    else:
-        return Exception("Post cannot be None")
+    if post is None:
+        raise ValueError("Post value cannot be None. You must specify a valid post.")
+    if not isinstance(post, Post):
+        raise TypeError("Input must be an instance of Post.")
+
+    postData = post_update_entity(post)
+    db.update(id, postData)
+
 
 
 def delete_post(id):
     post = db.get({"_id": ObjectId(id)})
-    if post is not None:
-        db.delete(id)
-    else:
-        return Exception("Post cannot be None")
+    if post is None:
+        raise ValueError("Post value cannot be None. You must specify a valid post.")
+
+    db.delete(id)
