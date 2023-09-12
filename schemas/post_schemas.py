@@ -14,13 +14,13 @@ def post_create_entity(item: Post) -> dict:
 
 def post_update_entity(item: PostUpdateDto) -> dict:
     entity = {}
-    if hasattr(item, "title"):
+    if item.title is not None:
         entity['title'] = item.title
-    if hasattr(item, "short_description"):
+    if item.short_description is not None:
         entity['short_description'] = item.short_description
-    if hasattr(item, "description"):
+    if item.description is not None:
         entity['description'] = item.description
-    if hasattr(item, "tags"):
+    if item.tags is not None:
         entity['tags'] = item.tags
     entity['updated_at'] = datetime.now()
     return entity
@@ -32,8 +32,8 @@ def post_get_entity(item) -> dict:
         'short_description': item['short_description'],
         'description': item['description'],
         'tags': item['tags'],
-        'created_at': datetime.now(),
-        'updated_at': None
+        'created_at': item['created_at'],
+        'updated_at': item['updated_at']
     }
 
 
