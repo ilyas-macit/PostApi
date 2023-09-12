@@ -15,7 +15,7 @@ db = Database(uri, db_name, collection)
 def get_all():
     posts = db.get_all()
     if posts is not None:
-        return posts
+        return post_get_all_entities(posts)
     else:
         return Exception("Data could not be retrieved.")
 
@@ -23,7 +23,7 @@ def get_all():
 def get_by_id(id):
     post = db.get({"_id": id})
     if post is not None:
-        return post
+        return post_get_entity(post)
     else:
         return Exception("Post could not found")
 
