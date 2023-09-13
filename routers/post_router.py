@@ -31,7 +31,8 @@ def create(post : Post):
 @posts.put("/posts/{id}")
 def update(id, post: PostUpdateDto):
     try:
-        update_post(id,post)
+        post = update_post(id,post)
+        return post
     except Exception as e:
         return HTTPException(status_code= 400, detail= str(e))
 

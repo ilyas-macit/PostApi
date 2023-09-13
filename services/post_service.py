@@ -4,7 +4,9 @@ from bson import ObjectId
 from models.post import Post, PostUpdateDto
 from schemas.post_schemas import *
 import os
+load_dotenv("../variables.env")
 load_dotenv("variables.env")
+
 
 uri = os.getenv("MONGODB_CONNECTION_URI")
 db_name = os.getenv("DATABASE_NAME")
@@ -16,7 +18,6 @@ def get_all():
     posts = db.get_all()
     if posts is None:
         raise Exception("Data could not be retrieved.")
-
     return post_get_all_entities(posts)
 
 
@@ -39,15 +40,17 @@ def create_post(post):
         raise Exception("Title must be greater than 3 character")
     postData = post_create_entity(post)
     db.add(postData)
+    return postData
 
 def update_post(id, post):
     if post is None:
         raise ValueError("Post value cannot be None. You must specify a valid post.")
-    if not isinstance(post, Post):
+    if not isinstance(post, PostUpdateDto):
         raise TypeError("Input must be an instance of Post.")
 
     postData = post_update_entity(post)
     db.update(id, postData)
+    return postData
 
 
 
@@ -57,3 +60,4 @@ def delete_post(id):
         raise ValueError("Post value cannot be None. You must specify a valid post.")
 
     db.delete(id)
+    return post_get_entity(post)
